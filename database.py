@@ -1,7 +1,13 @@
+import os
 from pymongo import MongoClient
 
 
-client = MongoClient("mongodb://localhost:27017/")
+if not os.getenv("ENV"):
+    mongo_uri = "mongodb://localhost:27017/"
+else:
+    mongo_uri = os.getenv("MONGO_URI")
+
+client = MongoClient(mongo_uri)
 db = client.github_events
 collection = db.events
 
