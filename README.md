@@ -9,10 +9,10 @@ This repository contains the implementation of a webhook endpoint to receive Git
 - Clean and minimalistic UI for better readability.
 
 ## Production Link
-You can view the deployed version of the application here:
-[Production Link](https://webhook-repo-bo1k.onrender.com/)
+You can view the deployed version of the application here: [Production Link](https://your-production-link.com).
+Feel free to modify the [action-repo](https://github.com/asu2sh/action-repo) to test different GitHub actions. Changes made in the action repository will be reflected in the production site in real-time!
 
-## Installation
+## How to Run Locally
 
 ### Prerequisites
 - Python 3.8+
@@ -37,26 +37,34 @@ You can view the deployed version of the application here:
     pip install -r requirements.txt
     ```
 
-3. **Run the FastAPI server**:
+4. **Create a `.env` file**:
+    Set the following environment variables in a `.env` file (if applicable):
+    ```plaintext
+    MONGO_REMOTE_URI="mongodb+srv://<username>:<password>@cluster0.i7pzb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"     # If using remote
+    MONGO_DATABASE_NAME=<mongo-db-name>
+    MONGO_COLLECTION_NAME=<mongo-collection-name>
+    ```
+
+5. **Run the FastAPI server**:
     ```bash
     fastapi dev app.py
     ```
 
-4. **Expose your local server to the internet (using ngrok)**:
+6. **Expose your local server to the internet (using ngrok)**:
     In a new terminal window, run:
     ```bash
     ngrok http 8000
     ```
     This will give you a URL like `https://<your-ngrok-id>.ngrok.io`. Copy this URL for the next step.
 
-5. **Set up the webhook on GitHub**:
+7. **Set up the webhook on GitHub**:
     Go to the settings of your `action-repo` on GitHub:
     - Navigate to **Settings** > **Webhooks** > **Add webhook**.
     - Paste the ngrok URL followed by `/webhook`, e.g., `https://<your-ngrok-id>.ngrok.io/webhook`.
     - Select **Content-Type** as `application/json`.
     - Choose the events **Push**, **Pull Request**, and **Merge**.
 
-6. **Access the UI**:
+8. **Access the UI**:
     Visit `http://localhost:8000` in your browser to see the latest events.
 
 ## Testing Locally
