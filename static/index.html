@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Webhook Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .event {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Latest GitHub Webhook Events</h1>
+    <div id="events-container">
+    </div>
+
+    <script>
+        async function fetchEvents() {
+            try {
+                const response = await fetch('/events');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch events');
+                }
+
+                const events = await response.json();
+                const container = document.getElementById('events-container');
+                container.innerHTML = '';
+
+                if (events.length === 0) {
+                    const noEventsMessage = document.createElement('div');
+                    noEventsMessage.textContent = 'No events to display.';
+                    container.appendChild(noEventsMessage);
+                    return;
+                }
+
+                events.forEach(event => {
+                    const div = document.createElement('div');
+                    div.classList.add('event');
+
+                    const timestamp = new Date(event.timestamp).toLocaleString('en-GB', {
+                        timeZone: 'UTC',
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+
+                    let eventText = '';
+
+                    if (event.action === 'push') {
+                        eventText = `"${event.author}" pushed to "${event.to_branch}" on ${timestamp} UTC`;
+                    } else if (event.action === 'pull_request') {
+                        eventText = `"${event.author}" submitted a pull request from "${event.from_branch}" to "${event.to_branch}" on ${timestamp} UTC`;
+                    } else if (event.action === 'merge') {
+                        eventText = `"${event.author}" merged branch "${event.from_branch}" to "${event.to_branch}" on ${timestamp} UTC`;
+                    } else {
+                        eventText = `Unknown action by "${event.author}" on ${timestamp}`;
+                    }
+
+                    div.textContent = eventText;
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                const container = document.getElementById('events-container');
+                container.innerHTML = `<p>Error fetching events: ${error.message}</p>`;
+            }
+        }
+
+        setInterval(fetchEvents, 15000);
+        window.onload = fetchEvents;
+    </script>
+</body>
+</html>
