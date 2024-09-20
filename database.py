@@ -1,13 +1,15 @@
 import os
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 
-if not os.getenv("ENV"):
-    mongo_uri = "mongodb://localhost:27017/"
-else:
+if os.getenv("ENV") == "production":
     mongo_uri = os.getenv("MONGO_URI")
+    client = MongoClient(mongo_uri, server_api=ServerApi('1'))
+else:
+    mongo_uri = "mongodb://localhost:27017/"
+    client = MongoClient(mongo_uri)
 
-client = MongoClient(mongo_uri)
 db = client.github_events
 collection = db.events
 
