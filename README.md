@@ -47,7 +47,7 @@ Feel free to modify the [action-repo](https://github.com/asu2sh/action-repo) to 
 
 5. **Run the FastAPI server**:
     ```bash
-    fastapi dev app.py
+    fastapi dev main.py
     ```
 
 6. **Expose your local server to the internet (using ngrok)**:
