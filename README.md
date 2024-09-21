@@ -40,9 +40,10 @@ Feel free to modify the [action-repo](https://github.com/asu2sh/action-repo) to 
 4. **Create a `.env` file**:
     Set the following environment variables in a `.env` file (if applicable):
     ```plaintext
-    MONGO_REMOTE_URI="mongodb+srv://<username>:<password>@cluster0.i7pzb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"     # If using remote
     MONGO_DATABASE_NAME=<mongo-db-name>
     MONGO_COLLECTION_NAME=<mongo-collection-name>
+    # If using remote mongo DB:
+    MONGO_REMOTE_URI="mongodb+srv://<username>:<password>@cluster0.i7pzb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     ```
 
 5. **Run the FastAPI server**:
@@ -72,10 +73,12 @@ You can test the webhook by pushing to your `action-repo` and watching the data 
 
 ## Access the UI
 Here is a screenshot of the minimalistic UI displaying recent webhook events:
+
 ![UI Screenshot](images/ui_screenshot.png)
 
 ## Application Flow
 Here is the complete flow of the application:
+
 ![Application Flow](images/application_flow.png)
 
 ## Why FastAPI?
