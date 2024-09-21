@@ -1,5 +1,6 @@
 import json
 import urllib.parse
+from datetime import datetime
 from database import collection, store_event_in_db
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse
@@ -109,6 +110,8 @@ async def get_events():
             "action": event["action"],
             "from_branch": event.get("from_branch", None),
             "to_branch": event["to_branch"],
-            "timestamp": event["timestamp"]
+            "timestamp": datetime.fromisoformat(event["timestamp"])
         })
-    return event_list
+    
+    sorted_events = sorted(event_list, key=lambda x: x['timestamp'], reverse=True)
+    return sorted_events
