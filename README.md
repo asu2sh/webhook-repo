@@ -1,6 +1,6 @@
 # Webhook Receiver for GitHub Actions
 
-This repository contains the implementation of a webhook endpoint to receive GitHub events from another repository (action-repo). It listens to the following events: **Push**, **Pull Request**, and **Merge**. These events are stored in a MongoDB database and can be viewed via a polling UI that refreshes every 15 seconds.
+This repository contains the implementation of a webhook endpoint to receive GitHub events from another repository [action-repo](https://github.com/asu2sh/action-repo). It listens to the following events: **Push**, **Pull Request**, and **Merge**. These events are stored in a MongoDB database and can be viewed via a polling UI that refreshes every 15 seconds.
 
 ## Features
 - Receives GitHub webhook events for **Push**, **Pull Request**, and **Merge** actions.
